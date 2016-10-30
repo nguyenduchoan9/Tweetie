@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 24
@@ -22,6 +24,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding.enabled = true
 }
 
 repositories {
@@ -34,15 +41,37 @@ apply plugin: 'com.neenbedankt.android-apt'
 def dbflow_version = "3.1.1"
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.codepath.libraries:android-oauth-handler:1.1.0'
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile fileTree(include: '*.jar', dir: 'libs')
     // Picasso for remote image loading
-    compile 'com.squareup.picasso:picasso:2.5.2'
     // Android Async Http for sending async network requests
-    compile 'com.loopj.android:android-async-http:1.4.9'
     // DBFlow for simple persistence with an ORM
     apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    //    apt 'com.google.guava:guava:19.0' // add above dagger-compiler
+    //    apt 'com.google.dagger:dagger-compiler:2.5'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.codepath.libraries:android-oauth-handler:1.1.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:cardview-v7:24.2.1'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:support-v4:24.2.1'
+    compile 'jp.wasabeef:picasso-transformations:2.1.0'
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    compile 'com.google.android.gms:play-services-appindexing:9.6.1'
+    compile 'org.glassfish:javax.annotation:10.0-b28'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    compile 'com.wdullaer:materialdatetimepicker:2.5.0'
+    compile 'com.android.support:customtabs:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    androidTestCompile 'junit:junit:4.12'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
 }
