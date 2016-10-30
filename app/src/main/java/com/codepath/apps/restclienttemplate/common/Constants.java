@@ -25,4 +25,9 @@ public class Constants {
     public static int RETWEET_KEY=999;
     public static final int NOT_CLICK=0;
     public static final int CLICKED=1;
+
+    public static String PING_GOOGLE = "/system/bin/ping -c 1 8.8.8.8";
+
+    public static int MODE_INTERNET= 1;
+    public static int MODE_NO_INTERNET= 2;
 }

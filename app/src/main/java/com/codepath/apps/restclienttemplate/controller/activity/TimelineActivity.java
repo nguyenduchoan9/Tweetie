@@ -18,6 +18,7 @@ import com.codepath.apps.restclienttemplate.common.Constants;
 import com.codepath.apps.restclienttemplate.common.SearchRequest;
 import com.codepath.apps.restclienttemplate.controller.fragment.ComposeTweetFragment;
 import com.codepath.apps.restclienttemplate.data.ParseResponse;
+import com.codepath.apps.restclienttemplate.data.TweetDataSource;
 import com.codepath.apps.restclienttemplate.databinding.ActivityTimelineBinding;
 import com.codepath.apps.restclienttemplate.model.model.Tweet;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
@@ -36,6 +37,7 @@ public class TimelineActivity extends OAuthLoginActionBarActivity<RestClient> {
     private ActivityTimelineBinding binding;
     private LinearLayoutManager mLinearLayoutManager;
     private Gson mGson;
+    private TweetDataSource mTweetDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,11 @@ public class TimelineActivity extends OAuthLoginActionBarActivity<RestClient> {
         mSearchRequest = new SearchRequest();
         mGson = new Gson();
         binding.setWrapper(this);
+        mTweetDataSource = new TweetDataSource();
+        if(RestApplication.MODE == Constants.MODE_INTERNET){
+            mTweetDataSource.clearAll();
+        }
+
     }
 
     private interface HandleListener{
@@ -104,24 +111,42 @@ public class TimelineActivity extends OAuthLoginActionBarActivity<RestClient> {
     private void getTweet(){
         mSearchRequest.resetPage();
         binding.pbLoading.setVisibility(View.VISIBLE);
-        fetchTweet(mSearchRequest.getPage(),new HandleListener() {
-            @Override
-            public void onResultResponse(List<Tweet> tweets) {
-                mTimelineAdapter.setTweets(tweets);
-                binding.rvTweet.scrollToPosition(0);
-            }
-        });
+        if(RestApplication.MODE == Constants.MODE_INTERNET){
+            fetchTweet(mSearchRequest.getPage(),new HandleListener() {
+                @Override
+                public void onResultResponse(List<Tweet> tweets) {
+                    Log.d("InternetCheck","mode 1 get");
+                    mTimelineAdapter.setTweets(tweets);
+                    mTweetDataSource.store(tweets);
+                    binding.rvTweet.scrollToPosition(0);
+                }
+            });
+        }else{
+            Log.d("InternetCheck","mode 2 get");
+            List<Tweet> tweets = mTweetDataSource.getAll();
+            mTimelineAdapter.setTweets(tweets);
+            handleComplete();
+        }
+
     }
 
     private void getMoreTweet(){
         mSearchRequest.nextPage();
         binding.pbLoading.setVisibility(View.VISIBLE);
-        fetchTweet(mSearchRequest.getPage(), new HandleListener() {
-            @Override
-            public void onResultResponse(List<Tweet> tweets) {
-                mTimelineAdapter.addTweets(tweets);
-            }
-        });
+        if(RestApplication.MODE == Constants.MODE_INTERNET){
+            fetchTweet(mSearchRequest.getPage(), new HandleListener() {
+                @Override
+                public void onResultResponse(List<Tweet> tweets) {
+                    Log.d("InternetCheck","mode 1 more");
+                    mTimelineAdapter.addTweets(tweets);
+                    mTweetDataSource.store(tweets);
+                }
+            });
+        }else{
+            Log.d("InternetCheck","mode 2 more");
+            Toast.makeText(this,"Internet have been not connected", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void fetchTweet(int page, HandleListener listener){
@@ -157,7 +182,6 @@ public class TimelineActivity extends OAuthLoginActionBarActivity<RestClient> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK && requestCode == Constants.DETAIL_REQUEST_CODE){
-            Toast.makeText(this, "resull Detail", Toast.LENGTH_SHORT).show();
             Tweet tweet = data.getParcelableExtra(Constants.TWEET_ARGS_DETAIL);
             int pos = data.getIntExtra(Constants.TWEET_ARGS_POS, 0);
 

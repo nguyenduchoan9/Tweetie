@@ -11,6 +11,7 @@ import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.RestApplication;
 import com.codepath.apps.restclienttemplate.RestClient;
 import com.codepath.apps.restclienttemplate.model.model.User;
+import com.codepath.apps.restclienttemplate.utils.NetworkAndInternetUtil;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -45,18 +46,25 @@ public class LoginActivity extends OAuthLoginActionBarActivity<RestClient> {
         // Intent i = new Intent(this, PhotosActivity.class);
         // startActivity(i);
         Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show();
-        RestApplication.getRestClient().getUserCurrent(new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                if(null != response){
-                    User user = mGson.fromJson(response.toString(), new TypeToken<User>(){}.getType());
+        if(NetworkAndInternetUtil.isNetworkAvailable(LoginActivity.this) && NetworkAndInternetUtil.isOnline()){
+            RestApplication.MODE =1;
+            RestApplication.getRestClient().getUserCurrent(new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    if(null != response){
+                        User user = mGson.fromJson(response.toString(), new TypeToken<User>(){}.getType());
 
-                    RestApplication.user = user;
-                    GoToTimeLineActivity();
+                        RestApplication.user = user;
+                        GoToTimeLineActivity();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            RestApplication.MODE =2;
+            GoToTimeLineActivity();
+        }
+
 
     }
     private void GoToTimeLineActivity(){

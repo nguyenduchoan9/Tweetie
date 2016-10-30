@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.codepath.apps.restclienttemplate.common.Constants;
+import com.codepath.apps.restclienttemplate.model.Entity.TweetEntity;
 import com.codepath.apps.restclienttemplate.utils.DateTimeUtil;
 import com.google.gson.annotations.SerializedName;
 
@@ -142,5 +143,49 @@ public class Tweet implements Parcelable{
             }
         }
         return Constants.TYPE_NULL;
+    }
+
+    public TweetEntity toEntity(){
+        TweetEntity tweetEntity = new TweetEntity();
+
+        tweetEntity.setId(this.id);
+        tweetEntity.setText(this.text);
+
+        tweetEntity.setUser(this.user.toEntity());
+        tweetEntity.setCreateDate(this.createDate);
+        tweetEntity.setRetweetCount(this.retweetCount);
+        tweetEntity.setReweeted(this.reweeted);
+        tweetEntity.setFavoriteCount(this.favoriteCount);
+        tweetEntity.setFavorited(this.favorited);
+        tweetEntity.setSource(this.source);
+        tweetEntity.setUrl(this.url);
+        tweetEntity.setEntity(this.entity.toEntity());
+
+        return tweetEntity;
+    }
+//    ("id") private long id;
+//    ("text") private String text;
+//    ("user") private UserEntity user;
+//    ("created_at") private String createDate;
+//    ("retweet_count") private long retweetCount;
+//    ("retweeted") private boolean reweeted;
+//    ("favorite_count") private long favoriteCount;
+//    ("favorited") private boolean favorited;
+//    ("source") private String source;
+//    ("url") private String url;
+//    ("entities") private EntityEntity entity;
+
+    public Tweet(TweetEntity entity){
+        id = entity.getId();
+        text = entity.getText();
+        user = new User(entity.getUser());
+        createDate = entity.getCreateDate();
+        retweetCount = entity.getRetweetCount();
+        reweeted = entity.isReweeted();
+        favoriteCount = entity.getFavoriteCount();
+        favorited = entity.isFavorited();
+        source = entity.getSource();
+        url = entity.getUrl();
+        this.entity = new Entity(entity.getEntity());
     }
 }

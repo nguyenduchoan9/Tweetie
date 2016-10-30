@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate.model.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.codepath.apps.restclienttemplate.model.Entity.UrlEntity;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -13,6 +14,21 @@ public class Url implements Parcelable{
     @SerializedName("expanded_url") private String expandedUrl;
     @SerializedName("url") private String url;
     @SerializedName("display_url") private String displayUrl;
+
+    public UrlEntity toEntity(){
+        UrlEntity urlEntity = new UrlEntity();
+        urlEntity.setDisplayUrl(this.displayUrl);
+        urlEntity.setUrl(this.url);
+        urlEntity.setExpandedUrl(this.expandedUrl);
+
+        return urlEntity;
+    }
+
+    public Url(UrlEntity entity){
+        this.expandedUrl=entity.getExpandedUrl();
+        this.url=entity.getUrl();
+        this.displayUrl=entity.getDisplayUrl();
+    }
 
     protected Url(Parcel in) {
         expandedUrl = in.readString();

@@ -3,13 +3,14 @@ package com.codepath.apps.restclienttemplate.model.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.codepath.apps.restclienttemplate.model.Entity.UserEntity;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Nguyen.D.Hoang on 10/25/2016.
  */
 
-public class User implements Parcelable{
+public class User implements Parcelable {
 
     @SerializedName("id")
     private long id;
@@ -30,6 +31,36 @@ public class User implements Parcelable{
     @SerializedName("screen_name")
     private String screenName;
 
+    public User() {
+    }
+
+    public User(UserEntity userEntity) {
+        this.id= userEntity.getId();
+        this.name=userEntity.getName();
+        this.profileImageUrl= userEntity.getProfileImageUrl();
+        this.createDate= userEntity.getCreateDate();
+        this.favouriteCount=userEntity.getFavouriteCount();
+        this.listed=userEntity.getListed();
+        this.followerCount=userEntity.getFollowerCount();
+        this.friendCount=userEntity.getFriendCount();
+        this.screenName=userEntity.getScreenName();
+    }
+
+    public UserEntity toEntity() {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(this.id);
+        userEntity.setName(this.name);
+        userEntity.setProfileImageUrl(this.profileImageUrl);
+        userEntity.setCreateDate(this.createDate);
+        userEntity.setFavouriteCount(this.favouriteCount);
+        userEntity.setListed(this.listed);
+        userEntity.setFollowerCount(this.followerCount);
+        userEntity.setFriendCount(this.friendCount);
+        userEntity.setScreenName(this.screenName);
+
+        return userEntity;
+    }
+
     public String getScreenName() {
         return screenName;
     }
@@ -44,7 +75,7 @@ public class User implements Parcelable{
         followerCount = in.readLong();
         friendCount = in.readLong();
         location = in.readString();
-        screenName=in.readString();
+        screenName = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

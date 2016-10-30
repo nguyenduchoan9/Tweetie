@@ -6,14 +6,27 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".controller.activity.LoginActivity" >
-
+    tools:context=".controller.activity.LoginActivity"
+    android:background="#00bef2">
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/twitter_login"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/ivLogin"
+    android:layout_marginTop="60dp"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
+        android:layout_marginTop="100dp"
         android:onClick="loginToRest"
-        android:text="@string/login_label" />
+        android:text="@string/login_label"
+        android:layout_below="@+id/ivLogin"
+        android:textColor="#ffffff"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:background="#42adcd"/>
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate.model.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.codepath.apps.restclienttemplate.model.Entity.MediaEntity;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -12,7 +13,6 @@ import com.google.gson.annotations.SerializedName;
 public class Media implements Parcelable{
     @SerializedName("type")
     private String type;
-
     @SerializedName("sizes")
     private Size size;
     @SerializedName("url")
@@ -25,6 +25,30 @@ public class Media implements Parcelable{
     private long id;
     @SerializedName("expanded_url")
     private String expandedUrl;
+
+
+    public MediaEntity toEntity(){
+        MediaEntity mediaEntity = new MediaEntity();
+        mediaEntity.setType(this.type);
+        mediaEntity.setSize(this.size.toEntity());
+        mediaEntity.setUrl(this.url);
+        mediaEntity.setMediaUrl(this.mediaUrl);
+        mediaEntity.setDisplayUrl(this.displayUrl);
+        mediaEntity.setId(this.id);
+        mediaEntity.setExpandedUrl(this.expandedUrl);
+
+        return mediaEntity;
+    }
+
+    public Media(MediaEntity entity){
+        this.type=entity.getType();
+        this.size= new Size(entity.getSize());
+        this.url=entity.getUrl();
+        this.mediaUrl=entity.getMediaUrl();
+        this.displayUrl=entity.getDisplayUrl();
+        this.id=entity.getId();
+        this.expandedUrl=entity.getExpandedUrl();
+    }
 
     protected Media(Parcel in) {
         type = in.readString();

@@ -1,16 +1,26 @@
 <resources>
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+        <!--<color name="colorPrimary">#03A9F4</color>-->
+        <!--<color name="colorPrimaryDark">#0288D1</color>-->
+        <!--<color name="colorPrimaryLight">#B3E5FC</color>-->
+        <!--<color name="colorAccent">#FFEB3B</color>-->
+        <!--<color name="colorPrimaryText">#212121</color>-->
+        <!--<color name="colorSecondaryText">#757575</color>-->
+        <!--<color name="colorIcons">#FFFFFF</color>-->
+        <!--<color name="colorDivider">#BDBDBD</color>-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+         <!--All customizations that are NOT specific to a particular API-level can go here. -->
+        <!--<color name="colorPrimary">#03A9F4</color>-->
+        <!--<color name="colorPrimaryDark">#0288D1</color>-->
+        <!--<color name="colorAccent">#FFEB3B</color>-->
     </style>
 
 </resources>

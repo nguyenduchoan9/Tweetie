@@ -201,7 +201,7 @@ public class TweetDetailActivity extends OAuthLoginActionBarActivity<RestClient>
             replyPostFragment.setListener(new ReplyPostFragment.OnFragmentInteractionListener() {
                 @Override
                 public void onReplyTweet(Tweet tweetReply) {
-                    Log.d("Tweet", tweetReply.toString());
+                    Log.d("TweetEntity", tweetReply.toString());
                     Toast.makeText(TweetDetailActivity.this, "Reply has been sent.", Toast.LENGTH_SHORT).show();
                 }
             });

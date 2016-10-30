@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate.model.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.codepath.apps.restclienttemplate.model.Entity.SmallSizeEntity;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -16,6 +17,21 @@ public class SmallSize implements Parcelable{
     private long width;
     @SerializedName("resize")
     private String resize;
+
+    public SmallSizeEntity toEntity(){
+        SmallSizeEntity smallSizeEntity = new SmallSizeEntity();
+        smallSizeEntity.setHeight(this.height);
+        smallSizeEntity.setWidth(this.width);
+        smallSizeEntity.setResize(this.resize);
+
+        return smallSizeEntity;
+    }
+
+    public SmallSize(SmallSizeEntity entity){
+        this.height=entity.getHeight();
+        this.width=entity.getWidth();
+        this.resize=entity.getResize();
+    }
 
     public long getHeight() {
         return height;

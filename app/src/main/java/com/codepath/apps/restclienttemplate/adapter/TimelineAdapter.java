@@ -163,15 +163,14 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         if(200 == statusCode){
-                            Toast.makeText(v.getContext(), "Post has been unretweeted.", Toast.LENGTH_SHORT).show();
                             Tweet tweetRes = ParseResponse.getTweetFromResp(response);
 
                             tweet.setReweeted(false);
                             tweet.setRetweetCount(tweet.getRetweetCount()-1);
                             updateFavoriteTweet(tweet, pos);
 
-                            int posUnRetweet = getPosOfTweet(tweetRes);
-                            if(posUnRetweet != -1)removePostTweet(posUnRetweet);
+//                            int posUnRetweet = getPosOfTweet(tweetRes);
+//                            if(posUnRetweet != -1)removePostTweet(posUnRetweet);
                         }
                     }
                     @Override
@@ -186,7 +185,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
-                        Toast.makeText(v.getContext(), "Post has been retweeted.", Toast.LENGTH_SHORT).show();
                         Tweet tweetRes = ParseResponse.getTweetFromResp(response);
 
                         tweet.setReweeted(true);
@@ -237,7 +235,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         if(200 == statusCode){
-                            Toast.makeText(v.getContext(), "Object", Toast.LENGTH_SHORT).show();
                             Tweet tweetRes = ParseResponse.getTweetFromResp(response);
 
                             updateFavoriteTweet(tweetRes, pos);
@@ -255,7 +252,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
-                        Toast.makeText(v.getContext(), "Object", Toast.LENGTH_SHORT).show();
                         Tweet tweetRes = ParseResponse.getTweetFromResp(response);
 
                         updateFavoriteTweet(tweetRes, pos);
